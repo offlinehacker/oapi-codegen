@@ -341,6 +341,7 @@ func resolveType(schema *openapi3.Schema, path []string, outSchema *Schema) erro
 			outSchema.AdditionalTypes = append(outSchema.AdditionalTypes, additionalTypes...)
 		}
 		outSchema.Properties = arrayType.Properties
+		outSchema.SkipOptionalPointer = true
 	case "integer":
 		// We default to int64 if format doesn't ask for something else.
 		if f == "int64" {
