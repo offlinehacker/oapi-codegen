@@ -342,7 +342,7 @@ func resolveType(schema *openapi3.Schema, path []string, outSchema *Schema) erro
 		}
 		outSchema.Properties = arrayType.Properties
 	case "integer":
-		// We default to int if format doesn't ask for something else.
+		// We default to int64 if format doesn't ask for something else.
 		if f == "int64" {
 			outSchema.GoType = "int64"
 		} else if f == "int32" {
@@ -364,15 +364,15 @@ func resolveType(schema *openapi3.Schema, path []string, outSchema *Schema) erro
 		} else if f == "uint" {
 			outSchema.GoType = "uint"
 		} else if f == "" {
-			outSchema.GoType = "int"
-		} else {
+			outSchema.GoType = "int64"
+		} else {	
 			return fmt.Errorf("invalid integer format: %s", f)
 		}
 	case "number":
 		// We default to float for "number"
-		if f == "double" {
+		if f == "double" || f == "" {
 			outSchema.GoType = "float64"
-		} else if f == "float" || f == "" {
+		} else if f == "float" {
 			outSchema.GoType = "float32"
 		} else {
 			return fmt.Errorf("invalid number format: %s", f)
